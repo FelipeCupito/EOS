@@ -12,8 +12,6 @@ protected:
 
 public:
 
-    enum class VariableName;
-
     Peripheral(const std::string& name) : Component(name) {
         Core::getInstance().registerPeripheral(this);
     }

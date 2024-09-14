@@ -21,26 +21,13 @@ void Core::registerProcess(Process* process) {
     SystemManager::getInstance().addProcess(process);
 }
 
-template <typename Derived, std::size_t SIZE>
-typename Derived::ServiceAccessor* Core::getServiceProxy(const std::string& peripheralName) {
-    
-    auto* peripheral = SystemManager::getInstance().getPeripheral(peripheralName);
-    
-    // Asegúrate de hacer el cast con ambos parámetros de plantilla: Derived y SIZE
-    auto* serviceCapable = dynamic_cast<ServiceProvider<Derived, SIZE>*>(peripheral);
-
-    if (!serviceCapable) {
-        // Manejo de error
-        return nullptr;
-    }
-
-    return serviceCapable->getServiceProxy();
-}
-
+// // Service proxy
 // template <typename Derived>
 // typename Derived::ServiceAccessor* Core::getServiceProxy(const std::string& peripheralName) {
+//     // Obtenemos el periférico registrado con el nombre dado
 //     auto* peripheral = SystemManager::getInstance().getPeripheral(peripheralName);
-    
+
+//     // Intentamos hacer un dynamic_cast a un ServiceProvider
 //     auto* serviceCapable = dynamic_cast<ServiceProvider<Derived>*>(peripheral);
 
 //     if (!serviceCapable) {
@@ -48,8 +35,10 @@ typename Derived::ServiceAccessor* Core::getServiceProxy(const std::string& peri
 //         return nullptr;
 //     }
 
-//     return dynamic_cast<typename Derived::ServiceAccessor*>(serviceCapable->getServiceProxy());
+//     // Retornamos el proxy de servicio sin que el proceso tenga que especificar el número de servicios
+//     return serviceCapable->getServiceProxy();
 // }
+
 
 template<typename Derived>
 void Core::publishEvent(EventEmitter<Derived>* emitter, typename Derived::EventType event) {

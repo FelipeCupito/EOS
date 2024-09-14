@@ -8,18 +8,23 @@ public:
     CoolingSystemProcess() : Process("cooling_system", 1) {}
 
     void setup() override {
-        // Obtener el proxy del servicio de temperatura registrado de forma simple y segura
-        //auto proxy = Core::getInstance().getServiceProxy<TemperatureSensorService>("temp_sensor_1");
-        auto proxy = Core::getInstance().getServiceProxy<TemperatureSensorService, 2>("temp_sensor_1");
+        // Obtener el proxy del servicio de temperatura registrado sin especificar el número de servicios
+        auto proxy = Core::getInstance().getServiceApi<TemperatureSensorService>("temp_sensor_1");
 
         if (proxy) {
-            // Llamar al servicio de temperatura
-            int currentTemp = proxy->invokeService(TemperatureSensorService::ServiceName::readTemperature);
-            if (currentTemp > 30) {
-                handleOverheat();
+            // Verificar si el servicio de temperatura está registrado antes de invocarlo
+            if (proxy->hasService(static_cast<std::size_t>(TemperatureSensorService::ServiceName::readTemperature))) {
+                // Llamar al servicio de temperatura
+                int currentTemp = proxy->invokeService(static_cast<std::size_t>(TemperatureSensorService::ServiceName::readTemperature));
+                if (currentTemp > 30) {
+                    handleOverheat();
+                }
+            } else {
+                // Manejo de error si el servicio no está disponible
             }
         }
     }
+
 
     void loop() override {
         // Lógica continua

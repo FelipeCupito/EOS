@@ -3,11 +3,12 @@
 #include "../core/interfaces/EventEmitter.hpp"
 #include "../core/interfaces/ServiceProvider.hpp"
 
-class TemperatureSensorService : public Peripheral, public ServiceProvider<TemperatureSensorService, 2> {
+class TemperatureSensorService : public Peripheral, public ServiceProvider<TemperatureSensorService, 1> {
 public:
 
     enum class ServiceName {
-        readTemperature
+        readTemperature,
+        COUNT
     };
 
     TemperatureSensorService(const std::string& name): Peripheral(name) {
