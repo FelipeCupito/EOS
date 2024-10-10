@@ -2,16 +2,15 @@
 #pragma once
 #include <string>
 #include <functional>
-#include "SystemManager.hpp"
-#include "./interfaces/ServiceProvider.hpp"
+#include "./componentManager/SystemManager.hpp"
 
 // Forward declarations
-class Peripheral;
-class Process;
-class EventBus;
-class SystemManager;
-template<typename Derived>
-class EventEmitter;
+// class Peripheral;
+// class Process;
+// class EventBus;
+// class SystemManager;
+// template<typename Derived>
+// class EventEmitter;
 
 
 class Core {
